@@ -34,8 +34,12 @@ if __name__ == "__main__":
     target_sr = hps['data']['sampling_rate']
     model = whisper.load_model(args.whisper_size)
     speaker_annos = []
+    total_file = str(len(filelist))
+    now_file = 0
     for file in filelist:
         print(f"transcribing {parent_dir + file}...\n")
+        now_file = now_file + 1
+        print("总共" + total_file + "个文件，" + "当前第" + str(now_file) + "个")
         options = dict(beam_size=5, best_of=5)
         transcribe_options = dict(task="transcribe", **options)
         result = model.transcribe(parent_dir + file, word_timestamps=True, **transcribe_options)
